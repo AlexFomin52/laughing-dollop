@@ -1,7 +1,7 @@
 #include <iostream>  
 #include <fstream>  
 #include <vector>  
-#include "work.h"  
+#include "utilities.h"  
 
 int main() {
 
@@ -9,7 +9,7 @@ int main() {
 
     std::vector<std::vector<int>> cost;
 
-    readFile("input.txt", cost, n);
+    readFile("input1.txt", cost, n);
 
     std::vector<int> assignment(n);
 
@@ -19,7 +19,7 @@ int main() {
     
     int minCostGreedy = greedyAssignment(cost, greedyAssignmentResult);
     
-    writeFile("output.txt", cost, n, minCostBruteForce, assignment, minCostGreedy, greedyAssignmentResult);
+    writeFile("output1.txt", cost, n, minCostBruteForce, assignment, minCostGreedy, greedyAssignmentResult);
     
 
     return 0;
