@@ -1,5 +1,5 @@
-#ifndef WORK_H  
-#define WORK_H  
+#ifndef UTILITIES_H 
+#define UTILITIES_H   
 
 #include <vector>  
 void readFile(const std::string& filename, std::vector<std::vector<int>>& cost, int& n);
