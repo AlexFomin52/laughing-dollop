@@ -1,0 +1,1017 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{iftex}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\makeatletter
+\@ifundefined{KOMAClassName}{
+  \IfFileExists{parskip.sty}{
+    \usepackage{parskip}
+  }{
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{calc}
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em}
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} %
+\ifLuaTeX
+  \usepackage{selnolig}
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} 
+\urlstyle{same} 
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{Алексей Фомин}
+\date{}
+
+\begin{document}
+
+МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ
+
+федеральное государственное автономное образовательное учреждение
+высшего образования
+
+«САНКТ-ПЕТЕРБУРГСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ\\
+АЭРОКОСМИЧЕСКОГО ПРИБОРОСТРОЕНИЯ»
+
+КАФЕДРА 25
+
+КУРСОВАЯ РАБОТА (ПРОЕКТ)\\
+ЗАЩИЩЕНА С ОЦЕНКОЙ
+
+РУКОВОДИТЕЛЬ
+
+
+доц., канд. техн. наук Е.М. Линский
+
+ПОЯСНИТЕЛЬНАЯ ЗАПИСКА\\
+К КУРСОВОЙ РАБОТЕ (ПРОЕКТУ)\strut
+
+
+ЗАДАЧА О НАЗНАЧЕНИЯХ\\
+по дисциплине: \\
+
+Основы программирования
+
+РАБОТУ ВЫПОЛНИЛ
+
+
+
+СТУДЕНТ гр. № 2354
+
+Фомин А.А.\\
+
+подпись, дата \\
+
+
+
+Санкт-Петербург 2024
+\newpage
+\hypertarget{Оглавление}{%
+\section{Оглавление}\label{Оглавление}}
+
+\protect\hyperlink{Постановка задачи}{Постановка
+задачи
+\protect\hyperlink{Постановка задачи}{3}}
+
+\protect\hyperlink{Алгоритм}{Алгоритм
+\protect\hyperlink{Алгоритм}{4}}
+
+\protect\hyperlink{Алгоритм полного перебора}{1.1
+Алгоритм полного перебора
+\protect\hyperlink{Алгоритм полного перебоа}{4}}
+
+\protect\hyperlink{ПошаговыйПП}{1.2
+Пошаговый пример для алгоритма
+\protect\hyperlink{ПошаговыйПП}{5}}
+
+\protect\hyperlink{Жадный алгоритм}{2.1
+Жадный алгоритм
+\protect\hyperlink{Жадный алгоритм}{8}}
+
+\protect\hyperlink{ПошаговыйЖА}{2.2
+Пошаговый пример для алгоритма
+\protect\hyperlink{ПошаговыйЖА}{10}}
+
+\protect\hyperlink{Псевдокод}{3.1
+Псевдокод
+\protect\hyperlink{Псевдокод}{12}}
+
+\protect\hyperlink{Сравнение алгоритмов}{4.1
+Сравнение алгоритмов
+\protect\hyperlink{Сравнение алгоритмов}{13}}
+
+\protect\hyperlink{Инструкция}{Инструкция
+пользователя
+\protect\hyperlink{Инструкция}{13}}
+
+\protect\hyperlink{Тестовые примеры}{Тестовые
+примеры
+\protect\hyperlink{Тестовые примеры}{16}}
+
+\protect\hyperlink{Заключение}{Заключение
+\protect\hyperlink{Заключение}{19}}
+
+\protect\hyperlink{Список литературы}{Список
+литературы
+\protect\hyperlink{Список литературы}{19}}
+
+\protect\hyperlink{Приложение}{ПРИЛОЖНИЕ
+\protect\hyperlink{Приложение}{20}}
+\newpage
+\hypertarget{section}{%
+\section{}\label{section}}
+
+\hypertarget{Постановка задачи}{%
+\section{Постановка
+задачи}\label{Постановка задачи}}
+
+Задача о назначениях состоит в отыскании назначения, имеющего
+минимальную стоимость и при котором каждая работа выполняется некоторым
+человеком.
+
+Дополнительные требования к задаче:
+
+\begin{itemize}
+\item
+  Имеется n работников и n работ.
+\item
+  Стоимость назначения i-ого работника на j-ую работу равна c\_\{i,j\}.
+\item
+  Вход и выход программы: матрица работа-работники.
+\item
+  Для решения данной задачи требуется написать два алгоритма: полного
+  перебора и жадный.
+\item
+  Провести исследование и сравнить время и точность жадного алгоритма и
+  полного перебора.
+\end{itemize}
+
+Для задания использовалась следующая литература: А. Кофман, Введение в
+прикладную комбинаторику, Наука, 1975 г
+
+Пример, показывающий, что задача имеет смысл (таблица 1):
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+    & Работа 1 & Работа 2 & Работа 3 \\ \hline
+    Работник 1 & 100 & 200 & 300 \\ \hline
+    Работник 2 & 150 & 150 & 150 \\ \hline
+    Работник 3 & 200 & 150 & 250 \\ \hline
+    \end{tabular}
+    \caption{}
+    \label{tab:work_and_workers}
+\end{table}
+
+Из таблицы, очевидно, следует, что лучшим назначением будет: работник 1
+на работу 1, работник 2 на работу 3, работник 3 на работу 2. Так как
+общая стоимость будет минимальной и равна 400. При этом распределение,
+например, работник 1 на работу 1, работник 2 на работу 2, работник 3 на
+работу 3, будет стоить 500.
+\newpage
+
+\hypertarget{Алгоритм}{%
+\section{\textbf{Алгоритм}}\label{Алгоритм}}
+
+В решении данной задачи требуется построить два алгоритма: полного
+перебора и жадный.
+
+Двумерный вектор \textbf{cost} хранит всю матрицу работников-работ.
+
+\hypertarget{Алгоритм полного перебора}{%
+\subsection{\textbf{1.1 Алгоритм полного
+перебора}}\label{Алгоритм полного перебора}}
+
+Алгоритм полного перебора подразумевает рассмотрение абсолютно всех
+вариантов назначений и выбор наилучшего.
+
+После запуска функции, рассмотренной в приложении 1, в вектор
+\emph{perm} записываются числа от 1 до n (рисунок 1). Этот вектор нужен
+для рассмотрения всех расстановок. Переменная \emph{minCost} принимает
+максимально возможное числовое значение. И так как требуется найти
+минимальное, оно будет обновляться с каждым новым минимальным найденным
+значением.
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{image1.png}
+    \caption{}
+    \label{fig:enter-label}
+\end{figure}
+\newpage
+Затем, проходя по циклу, рассматривающему все размещения (внешний цикл),
+для каждого конкретного размещения создается переменная
+\emph{currentCost} равная 0. Для каждого работника \emph{i} от 0-ого до
+n-ого выбирается работа под номером, стоящим в размещении \emph{perm},
+имеющим индекс \emph{i} (внутренний цикл). Сумма назначения записывается
+в \emph{currentCost}. Если \emph{currentCost} меньше, чем \emph{minCost},
+то в \emph{minCost} записывается значение \emph{currentCost} и текущее
+размещение \emph{perm} записывается в общее назначение
+\textbf{assignment}. (рисунок 2)
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{image2.png}
+    \caption{}
+    \label{fig:enter-label}
+\end{figure}
+
+
+Асимптотическая сложность алгоритма полного перебора: \emph{O(n!)}
+
+\hypertarget{\textbf{ПошаговыйПП}}{%
+\subsubsection{\texorpdfstring{\textbf{1.2 Пошаговый пример для
+алгоритма}}{1.2 Пошаговый пример для алгоритма}}\label{ПошаговыйПП}}
+
+Дана матрица 3 на 3 (таблица 2)
+
+Таблица 2
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+    & Работа 1 & Работа 2 & Работа 3 \\ \hline
+    Работник 1 & 10 & 19 & 5 \\ \hline
+    Работник 2 & 10 & 18 & 2 \\ \hline
+    Работник 3 & 13 & 16 & 3 \\ \hline
+    \end{tabular}
+    \caption{}
+    \label{tab:work_and_workers}
+\end{table}
+
+Следовательно, n = 3, \emph{perm} = \{0, 1, 2\}. Программа заходит во
+внешний цикл.
+
+Самой первой расстановкой, которую рассмотрит полный перебор, будет (0,
+1, 2).
+\begin{quote}
+Первая итерация внешнего цикла(0, 1, 2):
+\begin{quote}
+Первая итерация внутреннего цикла:
+
+
+\begin{quote}
+\emph{i} = 0
+
+\emph{currentCost} = \emph{cost}{[}0{]}{[}\emph{perm}{[}0{]}{]} =
+\emph{cost}{[}0{]}{[}0{]} = 10.
+\end{quote}
+Вторая итерация внутреннего цикла:
+\begin{quote}
+\emph{i} = 1
+
+{currentCost} = {currentCost} +
+{cost}{[}1{]}{[}{perm}{[}1{]}{]} = 10 +
+{cost}{[}1{]}{[}1{]} = 10 + 18 = 28.
+\end{quote}
+Третья итерация внутреннего цикла:
+\begin{quote}
+\emph{i} = 2
+
+\emph{\textit{currentCost}} = \emph{currentCost} +
+\emph{cost}{[}2{]}{[}\emph{perm}{[}2{]}{]} = 28 + cost{[}2{]}{[}2{]} =
+28 + 3 = 31.
+\end{quote}
+
+\emph{currentCost} \textless{} \emph{minCost} = true
+
+\emph{minCost} = \emph{currentCost} = 31
+\end{quote}
+Вторая итерация внешнего цикла (0, 2, 1):
+\begin{quote}
+Первая итерация внутреннего цикла:
+
+\begin{quote}
+\emph{i} = 0
+
+\emph{currentCost} = \emph{cost}{[}0{]}{[}\emph{perm}{[}0{]}{]} =
+\emph{cost}{[}0{]}{[}0{]} = 10.
+\end{quote}
+
+Вторая итерация внутреннего цикла:
+\begin{quote}
+\emph{i} = 1
+
+\emph{currentCost} = \emph{currentCost} +
+\emph{cost}{[}1{]}{[}\emph{perm}{[}1{]}{]} = 10 +
+\emph{cost}{[}1{]}{[}2{]} = 10 + 2 = 12.
+\end{quote}
+Третья итерация внутреннего цикла:
+\begin{quote}
+\emph{i} = 2
+
+\emph{currentCost} = \emph{currentCost} +
+\emph{cost}{[}2{]}{[}\emph{perm}{[}2{]}{]} = 12 +
+\emph{cost}{[}2{]}{[}1{]} = 12 + 16 = 28.
+\end{quote}
+
+\emph{currentCost} \textless{} \emph{minCost} = true
+
+\emph{minCost} = \emph{currentCost} = 28
+\end{quote}
+Третья итерация внешнего цикла (1, 0, 2):
+\begin{quote}
+Первая итерация внутреннего цикла:
+
+\begin{quote}
+\emph{i} = 0
+
+\emph{currentCost} = \emph{cost}{[}0{]}{[}\emph{perm}{[}0{]}{]} =
+\emph{cost}{[}0{]}{[}1{]} = 19.
+
+\end{quote}
+Вторая итерация внутреннего цикла:
+\begin{quote}
+\emph{i} = 1
+
+\emph{currentCost} = \emph{currentCost} +
+\emph{cost}{[}1{]}{[}\emph{perm}{[}1{]}{]} = 19 +
+\emph{cost}{[}1{]}{[}0{]} = 19 + 10 = 29.
+\end{quote}
+Третья итерация внутреннего цикла:
+\begin{quote}
+i = 2
+
+\emph{currentCost} = \emph{currentCost} +
+\emph{cost}{[}2{]}{[}\emph{perm}{[}2{]}{]} = 12 +
+\emph{cost}{[}2{]}{[}2{]} = 29 + 3 = 32.
+\end{quote}
+\emph{currentCost} \textless{} \emph{minCost} = false
+
+\emph{minCost} = 28
+\end{quote}
+Четвертая итерация внешнего цикла (1, 2, 0):
+\begin{quote}
+Первая итерация внутреннего цикла:
+
+\begin{quote}
+\emph{i} = 0
+
+\emph{currentCost} = \emph{cost}{[}0{]}{[}\emph{perm}{[}0{]}{]} =
+\emph{cost}{[}0{]}{[}1{]} = 19.
+
+\end{quote}
+Вторая итерация внутреннего цикла:
+\begin{quote}
+\emph{i} = 1
+
+\emph{currentCost} = \emph{currentCost} +
+\emph{cost}{[}1{]}{[}\emph{perm}{[}1{]}{]} = 19 +
+\emph{cost}{[}1{]}{[}2{]} = 19 + 2 = 21.
+\end{quote}
+Третья итерация внутреннего цикла:
+\begin{quote}
+\emph{i} = 2
+
+\emph{currentCost} = \emph{currentCost} +
+\emph{cost}{[}2{]}{[}\emph{perm}{[}2{]}{]} = 12 +
+\emph{cost}{[}2{]}{[}0{]} = 21 + 13 = 34.
+\end{quote}
+\emph{currentCost} \textless{} \emph{minCost} = false
+
+\emph{minCost} = 28
+\end{quote}
+Пятая итерация внешнего цикла (2, 0, 1):
+\begin{quote}
+Первая итерация внутреннего цикла:
+
+\begin{quote}
+\emph{i} = 0
+
+\emph{currentCost} = \emph{cost}{[}0{]}{[}\emph{perm}{[}0{]}{]} =
+\emph{cost}{[}0{]}{[}2{]} = 5.
+
+\end{quote}
+Вторая итерация внутреннего цикла:
+\begin{quote}
+\emph{i} = 1
+
+\emph{currentCost} = \emph{currentCost} +
+\emph{cost}{[}1{]}{[}\emph{perm}{[}1{]}{]} = 5 +
+\emph{cost}{[}1{]}{[}0{]} = 5 + 10 = 15.
+\end{quote}
+Третья итерация внутреннего цикла:
+\begin{quote}
+\emph{i} = 2
+
+\emph{currentCost} = \emph{currentCost} +
+\emph{cost}{[}2{]}{[}\emph{perm}{[}2{]}{]} = 15 +
+\emph{cost}{[}2{]}{[}1{]} = 15 + 16 = 31.
+\end{quote}
+\emph{currentCost} \textless{} \emph{minCost} = false
+
+\emph{minCost} = 28
+\end{quote}
+Шестая итерация внешнего цикла (2, 1, 0):
+\begin{quote}
+Первая итерация внутреннего цикла:
+\begin{quote}
+
+\emph{i} = 0
+
+\emph{currentCost} = \emph{cost}{[}0{]}{[}\emph{perm}{[}0{]}{]} =
+\emph{cost}{[}0{]}{[}2{]} = 5.
+
+\end{quote}
+Вторая итерация внутреннего цикла:
+\begin{quote}
+\emph{i} = 1
+
+\emph{currentCost} = \emph{currentCost} +
+\emph{cost}{[}1{]}{[}\emph{perm}{[}1{]}{]} = 5 +
+\emph{cost}{[}1{]}{[}1{]} = 5 + 18 = 23.
+\end{quote}
+Третья итерация внутреннего цикла:
+\begin{quote}
+\emph{i} = 2
+
+\emph{currentCost} = \emph{currentCost} +
+\emph{cost}{[}2{]}{[}\emph{perm}{[}2{]}{]} = 23 +
+\emph{cost}{[}2{]}{[}0{]} = 23 + 13 = 36.
+\end{quote}
+\emph{currentCost} \textless{} \emph{minCost} = false
+
+\emph{minCost} = 28
+\end{quote}
+\end{quote}
+Итого \emph{minCost} = 28, и \textbf{assignment} = \{0, 2, 1\}.
+
+\hypertarget{Жадный алгоритм}{%
+\subsection{2.1 Жадный
+алгоритм}\label{Жадный алгоритм}}
+
+Жадный алгоритм нужен для того, чтобы сэкономить время работы программы,
+при этом, не сильно потеряв точность. Реализацией жадного алгоритма
+является выбор наилучшей работы для работников по очереди.
+
+После запуска функции, показанной в приложении 2, создается булевой
+вектор \textbf{assigned} размера n, для хранения номеров уже назначенных
+работ (рисунок 3). И создается переменная \emph{totalCost}, хранящая
+сумму назначений.
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{image3.png}
+    \caption{}
+    \label{fig:enter-label}
+\end{figure}
+
+Запускается внешний цикл для работника \emph{i} от 0-ого до n-ого,
+создаются переменные \emph{minCost} и \emph{jobIndex}. (Рисунок 4).
+Затем во внутреннем цикле, проходящем по работам \emph{j} от 0-ой до
+n-ой, и если на эту работу еще не назначен работник, и назначение на
+\emph{j}-ую работу минимальное для \emph{i}-ого работника, то она
+назначается ему. К \emph{totalCost} прибавляется это назначение.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{image4.png}
+    \caption{}
+    \label{fig:enter-label}
+\end{figure}
+\newpage
+
+Асимптотическая сложность алгоритма полного перебора: O(\(n^{2}\)).
+
+\hypertarget{ПошаговыйЖА}{%
+\subsubsection{\texorpdfstring{\textbf{2.2 Пошаговый пример для
+алгоритма}}{2.2 Пошаговый пример для алгоритма}}\label{ПошаговыйЖА}}
+
+Дана матрица 3 на 3(таблица 2)
+
+n = 3, \textbf{assigned} = \{false, false, false\}.
+
+Программа заходит во внешний цикл:
+\begin{quote}
+Первая итерация внешнего цикла:
+\begin{quote}
+\emph{i} = 0
+
+Первая итерация внутреннего цикла:
+\begin{quote}
+\emph{j} = 0
+
+\textbf{assigned}{[}0{]} = false \&\& \emph{cost}{[}0{]}{[}0{]}
+\textless{} \emph{minCost}
+\end{quote}
+\emph{minCost} = 10
+
+\emph{jobIndex} = 0
+
+Вторая итерация внутреннего цикла:
+\begin{quote}
+
+\emph{j} = 1
+
+
+\textbf{assigned}{[}1{]} = false \&\& \emph{cost}{[}0{]}{[}1{]}
+\textgreater{} \emph{minCost}
+\end{quote}
+\emph{minCost} = 10
+
+\emph{jobIndex} = 0
+
+Третья итерация внутреннего цикла:
+\begin{quote}
+
+\emph{j} = 2
+
+
+\textbf{assigned}{[}2{]} = false \&\& \emph{cost}{[}0{]}{[}2{]}
+\textless{} \emph{minCost}
+\end{quote}
+\emph{minCost} = 5
+
+\emph{jobIndex} = 2
+\end{quote}
+\textbf{assignment}{[}0{]} = 2
+
+\textbf{assigned}{[}2{]} = true
+
+\emph{totalCost} = 0 + 5 = 5
+
+Вторая итерация внешнего цикла:
+\begin{quote}
+\emph{i} = 1
+
+Первая итерация внутреннего цикла:
+\begin{quote}
+\emph{j} = 0
+
+\textbf{assigned}{[}0{]} = false \&\& \emph{cost}{[}1{]}{[}0{]}
+\textless{} \emph{minCost}
+\end{quote}
+\emph{minCost} = 10
+
+\emph{jobIndex} = 0
+
+Вторая итерация внутреннего цикла:
+
+\begin{quote}
+\emph{j} = 1
+
+
+\textbf{assigned}{[}1{]} = false \&\& \emph{cost}{[}1{]}{[}1{]}
+\textgreater{} \emph{minCost}
+\end{quote}
+\emph{minCost} = 10
+
+\emph{jobIndex} = 0
+
+Третья итерация внутреннего цикла:
+\begin{quote}
+\emph{j} = 2
+
+
+\textbf{assigned}{[}2{]} = true \&\& \emph{cost}{[}1{]}{[}2{]}
+\textless{} \emph{minCost}
+\end{quote}
+\emph{minCost} = 10
+
+\emph{jobIndex} = 0
+\end{quote}
+\textbf{assignment}{[}1{]} = 0
+
+\textbf{assigned}{[}0{]} = true
+
+\emph{totalCost} = 5 + 10 = 15
+
+Третья итерация внешнего цикла:
+\begin{quote}
+\emph{i} = 2
+
+Первая итерация внутреннего цикла:
+\begin{quote}
+\emph{j} = 0
+
+\textbf{assigned}{[}0{]} =true \&\& \emph{cost}{[}2{]}{[}0{]}
+\textless{} \emph{minCost}
+\end{quote}
+\emph{minCost} = {$\infty$}
+
+\emph{jobIndex} = -1
+
+Вторая итерация внутреннего цикла:
+\begin{quote}
+\emph{j} = 1
+
+
+\textbf{assigned}{[}1{]} = false \&\& \emph{cost}{[}2{]}{[}1{]}
+\textless{} minCost
+\end{quote}
+\emph{minCost} = 16
+
+\emph{jobIndex} = 1
+
+Третья итерация внутреннего цикла:
+
+\begin{quote}
+\emph{j} = 2
+
+
+\textbf{assigned}{[}2{]} = true \&\& \emph{cost}{[}2{]}{[}2{]}
+\textless{} \emph{minCost}
+\end{quote}
+\emph{minCost} = 16
+
+\emph{jobIndex} = 1
+\end{quote}
+\textbf{assignment}{[}2{]} = 1
+
+\textbf{assigned}{[}1{]} = true
+
+\emph{totalCost} = 15 + 16 = 31
+\end{quote}
+Итого \emph{totalCost} = 31, \textbf{assignment} = \{2, 0, 1\}.
+
+\hypertarget{Псевдокод}{%
+\subsection{3.1
+Псевдокод}\label{псевдокод}}
+
+Задача о назначениях(n)
+
+Вход: матрица n на n, с натуральными числами -- стоимостью назначения
+работников на работы.
+
+Выход: минимальное назначение полным перебором и жадным алгоритмом.
+
+Полный перебор:
+
+\begin{quote}
+minCost = {$\infty$}
+
+perm(n)
+
+для каждой расстановки(perm(n)):
+\begin{quote}
+currentCost = 0
+
+для каждого назначения работника(n):
+\begin{quote}
+currentCost += cost{[}i{]}{[}perm{[}i{]}{]}~~
+\end{quote}
+if (currentCost \textless{} minCost):
+\begin{quote}
+minCost = currentCost
+
+assignment = perm
+\end{quote}
+\end{quote}
+\end{quote}
+Жадный алгоритм:
+
+assigned(n, false)
+
+\begin{quote}
+totalCost = 0
+
+для каждого работника(n):
+\begin{quote}
+minCost = {$\infty$}
+
+jobIndex = -1;
+
+для каждой работы(n):
+\begin{quote}
+if (!assigned{[}j{]} \&\& cost{[}i{]}{[}j{]} \textless{} minCost):
+\begin{quote}
+minCost = cost{[}i{]}{[}j{]}
+
+jobIndex = j
+\end{quote}
+\end{quote}
+assignment{[}i{]} = jobIndex
+
+assigned{[}jobIndex{]} = true
+
+totalCost += minCost
+\end{quote}
+\end{quote}
+\hypertarget{Сравнение алгоритмов}{%
+\subsection{4.1 Сравнение
+алгоритмов}\label{Сравнение алгоритмов}}
+
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|}
+    \hline
+    Число n – кол-во работников & Полный перебор & Жадный алгоритм \\ \hline
+    1 & 500 нс & 600 нс \\ \hline
+    2 & 600 нс & 700 нс \\ \hline
+    3 & 800 нс & 800 нс \\ \hline
+    4 & 1100 нс & 1100 нс \\ \hline
+    5 & 10500 нс & 1200 нс \\ \hline
+    6 & 18500 нс & 1300 нс \\ \hline
+    7 & 155200 нс & 1400 нс \\ \hline
+    8 & 666600 нс & 1300 нс \\ \hline
+    9 & 637900 нс & 1400 нс \\ \hline
+    10 & 76570300 нс & 1400 нс \\ \hline
+    11 & 761096900 нс & 1600 нс \\ \hline
+    12 & 9060960400 нс & 1600 нс \\ \hline
+    13 & 119710262400 нс & 1800 нс \\ \hline
+    14 & 1854436035900 нс & 2000 нс \\ \hline
+    \end{tabular}
+    \caption{}
+    \label{tab:comparison}
+\end{table}
+\newpage
+В таблице 3 представлена зависимость времени выполнения алгоритмов от
+числа n. График зависимости представлен на рисунке 5.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{image5.png}
+    \caption{}
+    \label{fig:enter-label}
+\end{figure}
+\newpage
+
+
+Для установления точности жадного алгоритма был проведён эксперимент. Для 10 случайных матриц размером n на n посчитана потеря жадного алгоритма от лучшего назначения, посчитано их среднее значение. График зависимости точности жадного алгоритма от n представлен на рисунке 6.
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{loss.pdf}
+    \caption{}
+    \label{fig:enter-label}
+\end{figure}
+\newpage
+\hypertarget{Инструкция}{%
+\section{Инструкция
+пользователя}\label{Инструкция}}
+
+Перед тем как запускать программы, пользователю необходимо создать
+текстовый файл, например input.txt. Чтобы не пришлось указывать
+расположение файла, его рекомендуется поместить в директорию программы,
+чтобы в командной строке писать просто input.txt вместо, например,  
+D:\textbackslash program\textbackslash course\textbackslash course\textbackslash input.txt.
+
+В первой строке файла написано натуральное число n, затем идет матрица n
+на n натуральных чисел. Каждой строке соответствует работник, каждой
+работе соответствует работа.
+
+Программа выполняется автоматически, и результат выводится в файл
+output.txt в той же директории.
+
+\hypertarget{Тестовые примеры}{%
+\section{\texorpdfstring{\textbf{Тестовые
+примеры}}{Тестовые примеры}}\label{Тестовые примеры}}
+
+Пример 1:
+
+\begin{quote}
+input:
+\begin{quote}
+3
+
+10 19 5
+
+10 18 2
+
+13 16 3
+\end{quote}
+output:
+\begin{quote}
+Brute force:
+
+Minimal cost: 28
+
+Workers arrangement: Worker 1 job 1
+
+Worker 2 job 3
+
+Worker 3 job 2
+
+Greedy algorithm:
+
+Minimal cost: 31
+
+Assignments: Worker 1 job 3
+
+Worker 2 job 1
+
+Worker 3 job 2
+\end{quote}
+\end{quote}
+Пример 2:
+\begin{quote}
+input:
+
+\begin{quote}
+6
+
+10 16 19 9 19 15
+
+9 15 17 16 13 12
+
+11 10 10 10 9 8
+
+12 14 13 11 10 15
+
+9 9 9 17 17 19
+
+20 9 17 20 8 15
+\end{quote}
+output:
+\begin{quote}
+Brute force:
+
+Minimal cost: 54
+
+Workers arrangement: Worker 1 job 4
+
+Worker 2 job 1
+
+Worker 3 job 6
+
+Worker 4 job 5
+
+Worker 5 job 3
+
+Worker 6 job 2
+
+Greedy algorithm:
+
+Minimal cost: 62
+
+Assignments: Worker 1 job 4
+
+Worker 2 job 1
+
+Worker 3 job 6
+
+Worker 4 job 5
+
+Worker 5 job 2
+
+Worker 6 job 3
+\end{quote}
+\end{quote}
+Пример 3:
+\begin{quote}
+input:
+\begin{quote}
+12
+
+
+10 16 19 9 19 15 9 15 17 16 13 12
+
+12 14 13 11 10 15 9 9 9 17 17 19
+
+10 16 19 9 19 15 9 9 9 17 17 19
+
+12 14 13 11 10 15 15 17 16 13 12 14
+
+20 9 17 20 8 15 20 9 17 20 8 15
+
+11 10 10 10 9 8 11 10 10 10 9 8
+
+10 16 19 9 19 15 9 15 17 16 13 12
+
+12 14 13 11 10 15 9 9 9 17 17 19
+
+10 16 19 9 19 15 9 9 9 17 17 19
+
+12 14 13 11 10 15 15 17 16 13 12 13
+
+20 9 17 20 8 15 20 9 17 20 8 15
+
+11 10 10 10 9 8 11 10 10 10 9 8
+\end{quote}
+output:
+\begin{quote}
+Brute force:
+
+Minimal cost: 115
+
+Workers arrangement: Worker 1 job 1
+
+Worker 2 job 3
+
+Worker 3 job 4
+
+Worker 4 job 5
+
+Worker 5 job 2
+
+Worker 6 job 6
+
+Worker 7 job 7
+
+Worker 8 job 8
+
+Worker 9 job 9
+
+Worker 10 job 10
+
+Worker 11 job 11
+
+Worker 12 job 12
+
+Greedy algorithm:
+
+Minimal cost: 126
+
+Assignments: Worker 1 job 4
+
+Worker 2 job 7
+
+Worker 3 job 8
+
+Worker 4 job 5
+
+Worker 5 job 11
+
+Worker 6 job 6
+
+Worker 7 job 1
+
+Worker 8 job 9
+
+Worker 9 job 2
+
+Worker 10 job 3
+
+Worker 11 job 12
+
+Worker 12 job 10
+\end{quote}
+\end{quote}
+\hypertarget{Заключение}{%
+\section{Заключение}\label{Заключение}}
+
+В данной работе были рассмотрены два алгоритма для решения задачи о
+назначениях: алгоритм полного перебора и жадный алгоритм. Также было
+выявлено, что алгоритм полного перебора, несмотря на свою точность,
+работает очень долго, уже для матрицы 20 на 20 алгоритм будет работать
+30 лет. Жадный же алгоритм работает быстро, но при этом теряет свою
+точность.
+
+Для более точного вычисления времени работы алгоритмов используется
+библиотека chrono, благодаря которой время работы алгоритма можно
+вычислять в наносекундах. График зависимости времени выполнения
+алгоритмов от числа n сделан в логарифмическом масштабе для более
+удобного представления.
+
+\hypertarget{Список литературы}{%
+\section{Список
+литературы}\label{Список литературы}}
+
+Кофман, А. Введение в прикладную комбинаторику / А. Кофман; Наука. --
+М., 1975. -- 477 с.
+
+Рейнгольд, Э. Комбинаторные алгоритмы / Э. Рейнгольд, Ю. Нивергельт, Н.
+Део; Мир. -- М., 1980. -- 476 с.
+\newpage
+\hypertarget{Приложение}{%
+\section{ПРИЛОЖНИЕ}\label{Приложение}}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{image6.png}
+    Приложение 1 - Полный перебор
+    \label{fig:enter-label}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{image7.png}
+    Приложение 2 - Жадный Алгоритм
+    \label{fig:enter-label}
+\end{figure}
+
+
+
+\end{document}
